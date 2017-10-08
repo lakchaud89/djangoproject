@@ -1,5 +1,7 @@
 import sqlalchemy
 from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
+
 
 class ConnectionManager:
 
@@ -16,3 +18,10 @@ class ConnectionManager:
         url = url.format(self.username, self.password, self.host, self.port, self.database)
         self.conn = sqlalchemy.create_engine(url, client_encoding='utf8')
         return self.conn
+
+
+class SessionManager:
+    def get_session(self,conn):
+        Session = sessionmaker(bind = conn)
+        session = Session()
+        return session
